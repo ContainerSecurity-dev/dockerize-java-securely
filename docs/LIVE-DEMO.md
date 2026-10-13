@@ -1,6 +1,6 @@
 # Live demo runbook
 
-Run commands from the repository root. Rehearse on the same machine and network before the session. Warm the Maven/image caches and Trivy databases; keep the results report as a fallback. These commands target `linux/amd64`, matching the recorded run. On another platform, repeat the measurements.
+Run commands from the repository root. Rehearse on the same machine and network before the session. Warm the Maven/image caches and Trivy databases; keep the results report as a fallback. These commands target `linux/amd64`, matching the recorded run. On an Apple Silicon Mac, replace `--platform linux/amd64` with `--platform linux/arm64` to build natively; keeping `linux/amd64` also works but builds under QEMU emulation. On any other platform, repeat the measurements as well.
 
 ## 1. Preflight
 

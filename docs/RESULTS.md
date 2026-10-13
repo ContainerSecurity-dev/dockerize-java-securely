@@ -1,10 +1,27 @@
 # Recorded results — 13 October 2026
 
-Platform: `linux/amd64`. Default application: Spring Boot 4.0.8, Java 21.
+Primary platform: `linux/amd64` (a same-day `linux/arm64` macOS repeat is recorded below). Default application: Spring Boot 4.0.8, Java 21.
 
 Tools: Docker Engine 29.4.0, Buildx 0.33.0-desktop.1, Scout 1.20.3, Trivy 0.75.0, Cosign 3.1.3. Maven Wrapper 3.3.4 downloads Maven 3.9.9 for the audience quickstart; Docker builds use Maven from their respective builder images.
 
 The original measurements below used build-stage SBOM scanning in both Dockerfiles. The current starting baseline deliberately omits that argument; the runbook teaches adding it before comparing build-stage inventories. The saved digests and Dockerfile hashes describe the original measured artifacts.
+
+## Second platform: macOS on Apple Silicon (`linux/arm64`)
+
+The same walkthrough was repeated on macOS (Apple Silicon), targeting `linux/arm64` instead of `linux/amd64`. Builds, the loopback registry, and both scanners ran natively in Docker Desktop's arm64 VM; no QEMU emulation was used. Tool versions differed slightly from the amd64 record: Docker Engine 29.8.2, Buildx 0.37.2, Scout 1.26.0, Trivy 0.74.0, Cosign 3.1.3.
+
+Every measured number matched the amd64 run:
+
+| Measurement | amd64 | arm64 |
+| --- | ---: | ---: |
+| Baseline runtime SPDX packages | 192 | 192 |
+| Baseline build-stage packages | 396 | 396 |
+| Hardened runtime SPDX packages | 47 | 47 |
+| Hardened build-stage packages | 377 | 377 |
+
+The Trivy records by target agreed as well: baseline Ubuntu `0/0/40/4/0`, baseline Java `3/5/2/0/0`, baseline `pebble` `0/3/5/1/4`; hardened Alpine none and hardened Java `3/5/2/0/0`. Scout reported baseline **5 critical, 13 high, 2 medium, 3 unspecified** and hardened **3 critical, 5 high, 2 medium**. Both smoke tests returned `Hello, Docker Security!` as `10001:10001`, Cosign signed and verified the hardened digest with transparency-log checks, and the critical/high gate still returned **1**.
+
+Only the image digests differ (they also change run to run and by architecture): baseline `sha256:e20f4182c6ebc47a6d9102aa6ba003cb38511fafadb1905413c63841c58815f5` and hardened `sha256:ec32bbf8bdfed7eb7755feaeeb68353cf414b18638fa4ea240e0a9e1a60cc0ae`. The full extracted findings, Scout output, and Cosign evidence are in [results/2026-10-13-macos-arm64.json](results/2026-10-13-macos-arm64.json), [results/baseline-scout-all-macos-arm64.txt](results/baseline-scout-all-macos-arm64.txt), [results/hardened-scout-macos-arm64.txt](results/hardened-scout-macos-arm64.txt), and [results/hardened-cosign-verify-macos-arm64.json](results/hardened-cosign-verify-macos-arm64.json).
 
 ## Build-stage SBOM lesson check
 
