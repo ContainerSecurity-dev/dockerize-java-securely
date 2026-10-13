@@ -48,6 +48,12 @@ The remaining Java findings are in Tomcat 11.0.24 and Jackson 3.1.5. Updating th
 
 Scout reported baseline totals of **5 critical, 13 high, 2 medium, 3 unspecified** and hardened totals of **3 critical, 5 high, 2 medium**. See the saved [baseline report](results/baseline-scout-all.txt) and [hardened report](results/hardened-scout.txt). Differences from Trivy demonstrate why cross-scanner totals must not be treated as equivalent.
 
+### VEX configuration matters
+
+The recorded Trivy scans did not use `--vex`. Docker Scout automatically applies DHI VEX statements; Trivy can apply them with `--vex repo` after configuring and downloading the DHI advisories repository. Grype can use an exported VEX document with `--vex vex.json`. See [Docker's scanner setup instructions](https://docs.docker.com/dhi/how-to/scan/).
+
+This is a possible source of scanner differences in general, not an established explanation for this run: the hardened application's totals agreed, while the differing baseline used official, non-DHI images. No VEX-enabled rerun is included in these measurements. VEX assesses affectedness; it does not patch dependencies.
+
 ## SBOM inventories
 
 | Image | Runtime SPDX packages | Additional build-stage packages |
