@@ -4,6 +4,12 @@ Platform: `linux/amd64`. Default application: Spring Boot 4.0.8, Java 21.
 
 Tools: Docker Engine 29.4.0, Buildx 0.33.0-desktop.1, Scout 1.20.3, Trivy 0.75.0, Cosign 3.1.3. Maven Wrapper 3.3.4 downloads Maven 3.9.9 for the audience quickstart; Docker builds use Maven from their respective builder images.
 
+The original measurements below used build-stage SBOM scanning in both Dockerfiles. The current starting baseline deliberately omits that argument; the runbook teaches adding it before comparing build-stage inventories. The saved digests and Dockerfile hashes describe the original measured artifacts.
+
+## Build-stage SBOM lesson check
+
+Rebuilt the starting baseline and a copy with `ARG BUILDKIT_SBOM_SCAN_STAGE=true`, exporting both as OCI archives with SBOM and provenance enabled. The starting image had one runtime SBOM with 192 packages. Adding the argument preserved that inventory and added `sbom-build` with 396 packages. Runtime configuration and layer digests were identical. See [the before/after evidence](results/sbom-stage-lesson.json).
+
 ## What passed
 
 - Both Dockerfiles built and ran the real HTTP integration test with `mvn verify`.

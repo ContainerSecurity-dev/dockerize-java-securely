@@ -1,7 +1,6 @@
 # syntax=docker/dockerfile:1
 # Same source and test suite; different builder and runtime base images.
 FROM maven:3.9-eclipse-temurin-21 AS build
-ARG BUILDKIT_SBOM_SCAN_STAGE=true
 WORKDIR /app
 COPY pom.xml .
 COPY src ./src

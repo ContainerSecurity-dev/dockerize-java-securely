@@ -49,7 +49,7 @@ See [the runbook](docs/LIVE-DEMO.md). Do not assume a hardened base makes applic
 
 | File | Purpose |
 | --- | --- |
-| `Dockerfile.baseline` | Official Maven builder and Eclipse Temurin runtime |
+| `Dockerfile.baseline` | Official Maven builder and Eclipse Temurin runtime; add build-stage SBOM coverage during the walkthrough |
 | `Dockerfile` | DHI Maven builder and DHI Temurin runtime |
 | `pom.xml` | Updated default application dependencies |
 | `docs/original-pom.xml` | Original 4.0.5 dependency baseline, deliberately retained for reproduction, not deployment |

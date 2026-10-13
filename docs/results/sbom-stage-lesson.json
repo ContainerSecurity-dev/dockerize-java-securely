@@ -1,0 +1,61 @@
+{
+  "before": {
+    "sboms": [
+      {
+        "name": "sbom",
+        "packages": 192
+      }
+    ],
+    "runtime": [
+      {
+        "config": "sha256:ea39c413226341d8301f4b614e384fba7ed705fd1effda319d77b9060f5ff622",
+        "layers": [
+          "sha256:4e07a0f12b2c009f98326fa391e869bd52fc63728c482400af6cb752bc16744b",
+          "sha256:06ad70e463aa4a17833d00d6d5d346c895ebb66fee637eefd67024dc6cdc2f1c",
+          "sha256:5d8dab7db2742f65eb651ddb9c472895877637821edd25947a57e6809ea99ecb",
+          "sha256:9d8d42fbc5604c4e895096a9217ddaef21c1eb762a43acedbc9c4554b58f65bb",
+          "sha256:3b4157e3a962cdb99242cd5b145bcc2124d0db0c9849175dd981fe78640d0a72",
+          "sha256:550bcd7b9380af835ebbbf439f5ddcaebfb2af951dc75d4bcbdc261cbe3917f0",
+          "sha256:b6b736165827025b3e01f228262939e008cbe19f4b67aacfa4959d34f8225d9b",
+          "sha256:14081ec0c19a850b924b51ba5b3863b3c50becefe8c808790088968fdfb87718"
+        ]
+      }
+    ],
+    "predicateTypes": [
+      "https://spdx.dev/Document",
+      "https://slsa.dev/provenance/v1"
+    ]
+  },
+  "after": {
+    "sboms": [
+      {
+        "name": "sbom",
+        "packages": 192
+      },
+      {
+        "name": "sbom-build",
+        "packages": 396
+      }
+    ],
+    "runtime": [
+      {
+        "config": "sha256:ea39c413226341d8301f4b614e384fba7ed705fd1effda319d77b9060f5ff622",
+        "layers": [
+          "sha256:4e07a0f12b2c009f98326fa391e869bd52fc63728c482400af6cb752bc16744b",
+          "sha256:06ad70e463aa4a17833d00d6d5d346c895ebb66fee637eefd67024dc6cdc2f1c",
+          "sha256:5d8dab7db2742f65eb651ddb9c472895877637821edd25947a57e6809ea99ecb",
+          "sha256:9d8d42fbc5604c4e895096a9217ddaef21c1eb762a43acedbc9c4554b58f65bb",
+          "sha256:3b4157e3a962cdb99242cd5b145bcc2124d0db0c9849175dd981fe78640d0a72",
+          "sha256:550bcd7b9380af835ebbbf439f5ddcaebfb2af951dc75d4bcbdc261cbe3917f0",
+          "sha256:b6b736165827025b3e01f228262939e008cbe19f4b67aacfa4959d34f8225d9b",
+          "sha256:14081ec0c19a850b924b51ba5b3863b3c50becefe8c808790088968fdfb87718"
+        ]
+      }
+    ],
+    "predicateTypes": [
+      "https://spdx.dev/Document",
+      "https://spdx.dev/Document",
+      "https://slsa.dev/provenance/v1"
+    ]
+  }
+}

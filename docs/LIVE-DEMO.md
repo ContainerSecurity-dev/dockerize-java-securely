@@ -71,7 +71,36 @@ scripts/scan.sh "$IMAGE" results/baseline-trivy.json
 
 Scout package/SBOM operations and authenticated CVE queries succeeded in the recorded run.
 
-## 5. Harden and compare
+## 5. Add build-stage SBOM coverage
+
+The starting `Dockerfile.baseline` deliberately has no `BUILDKIT_SBOM_SCAN_STAGE` argument. Inspect its runtime-only inventory first:
+
+```bash
+docker buildx imagetools inspect "$IMAGE_REPO:baseline" --format '{{json .SBOM}}' > results/baseline-sbom.json
+docker buildx imagetools inspect "$IMAGE_REPO:baseline" --format '{{json .Provenance}}' > results/baseline-provenance.json
+```
+
+Edit `Dockerfile.baseline` and add the argument immediately after the builder's `FROM`:
+
+```dockerfile
+FROM maven:3.9-eclipse-temurin-21 AS build
+ARG BUILDKIT_SBOM_SCAN_STAGE=true
+```
+
+Build a second tag and inspect the additional inventory:
+
+```bash
+docker buildx build --platform linux/amd64 \
+  -f Dockerfile.baseline \
+  --sbom=true --provenance=mode=max \
+  --metadata-file results/baseline-build-sbom-metadata.json \
+  --push -t "$IMAGE_REPO:baseline-build-sbom" .
+docker buildx imagetools inspect "$IMAGE_REPO:baseline-build-sbom" --format '{{json .SBOM}}' > results/baseline-with-build-sbom.json
+```
+
+The second SBOM contains an additional `sbom-build` document. Build tools are inventoried without being copied into the runtime filesystem. Keep both tags to show the difference. Maximum provenance exposes build details; use secret mounts, never credential build arguments.
+
+## 6. Harden and compare
 
 ```bash
 docker buildx build --platform linux/amd64 \
@@ -85,15 +114,6 @@ python3 scripts/summarize-scans.py results/baseline-trivy.json results/hardened-
 ```
 
 Compare the final app images built from the **same** source and dependencies, not a Maven builder against a Java runtime. Separate OS findings from Java-library findings. If DHI authentication fails, explain that limitation rather than presenting a fictional scan.
-
-## 6. Inspect attached attestations
-
-```bash
-docker buildx imagetools inspect "$IMAGE" --format '{{json .SBOM}}' > results/attached-sbom.json
-docker buildx imagetools inspect "$IMAGE" --format '{{json .Provenance}}' > results/provenance.json
-```
-
-`ARG BUILDKIT_SBOM_SCAN_STAGE=true` adds the build-stage SBOM. The recorded output contains the runtime SPDX document plus `sbom-build`. `mode=max` exposes build details; use secret mounts, never credential build arguments.
 
 ## 7. Sign and verify the immutable digest
 
