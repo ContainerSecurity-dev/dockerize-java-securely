@@ -1,0 +1,2 @@
+
+[{"critical":{"identity":{"docker-reference":"127.0.0.1:15000/dockerize-java-securely@sha256:dad8709f758213bca68fcd3336c13fb1471f744e9d90900d797348f9206a4e93"},"image":{"docker-manifest-digest":"sha256:dad8709f758213bca68fcd3336c13fb1471f744e9d90900d797348f9206a4e93"},"type":"https://sigstore.dev/cosign/sign/v1"},"optional":{}}]
